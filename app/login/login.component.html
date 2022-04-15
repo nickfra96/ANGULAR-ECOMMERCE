@@ -1,0 +1,24 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <div class="alert alert-danger"*ngIf='!autenticato'>
+      {{errorMessage}}
+    </div>
+
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="/assets/images/utente.png" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form>
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email" [(ngModel)]="userId">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password" [(ngModel)]="password">
+      <input type="submit" class="fadeIn fourth" value="Log In" (click)="gestAut()">
+    </form>
+
+
+  </div>
+</div>

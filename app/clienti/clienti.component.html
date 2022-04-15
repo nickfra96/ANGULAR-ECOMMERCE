@@ -1,0 +1,76 @@
+<br/>
+<div align="center">
+<span style="color: red"><h1><b>Pagina amministrazione utente</b></h1></span>
+</div>
+<br/>
+<div align="center" *ngIf='numUtenti'>
+  <span style="color: #29aafe">Utenti registrati in EBuy : <h3> {{numUtenti}} utenti</h3></span>
+
+</div>
+
+<div class="alert alert-danger"*ngIf='msg'>
+  {{msg}}
+
+</div>
+
+
+<div align="right">
+  <div class="col-lg-3">
+  <div class="filter-group">
+    <label>Cerca utente  per email: </label>
+    <input type="text" class="form-control" placeholder="Email utente" [(ngModel)]="email"><br>
+    <button type="button" class="btn btn-dark" (click)="getU()">Cerca</button>
+  </div>
+  </div>
+</div>
+
+
+<br/>
+<div class="col-lg-9">
+<div class="row">
+
+  <div class="col-lg-6 col-md-7 mb-5" *ngFor="let u of utenti| paginate: {itemsPerPage:righe,currentPage:pagina}">
+    <div class="card h-100">
+      <img class="card-img-top" src="/assets/images/utente3.png" alt="20">
+      <div class="card-body">
+        <h4 class="card-title">
+          <h5>Nome utente:</h5>
+          <p class ="text-primary">{{u.nome}} {{u.cognome}}</p>
+        </h4>
+        <h5><span style="color: green"> Email: {{u.email}}</span></h5>
+        <h5>Indirizzo: {{u.indirizzo}}</h5>
+        <h5>Città: {{u.citta}}</h5>
+        <h5>Password: {{u.password}}</h5>
+        <h5>Età: {{u.eta}}</h5>
+        <p class="card-text">
+        <div *ngFor="let o of u.ordini">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><span style="color: red">ID ordine: {{o.id_ordine}}</span> </li>
+          <li class="list-group-item"> Data: {{o.data}}</li>
+          <li class="list-group-item"> Quantità: {{o.quantita}}</li>
+          <li class="list-group-item"> Prezzo totale: {{o.prezzoTotale}}</li>
+          <div *ngFor="let a of o.listaArticoli">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item"> <span style="color: red">ID ARTICOLO: {{a.id}}</span></li>
+              <li class="list-group-item"> <img src={{a.image}} alt="60" width="60"></li>
+              <li class="list-group-item"> Nome: {{a.nome}}</li>
+              <li class="list-group-item"> Prezzo: {{a.prezzo}}</li>
+              <li class="list-group-item"> Descrizione: {{a.descrizione}}</li>
+              <li class="list-group-item"> Categoria: {{a.categoria.categoria}}</li>
+            </ul>
+          </div>
+
+        </ul>
+      </div>
+
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-danger" (click)="delUtente(u.email)">ELIMINA</button>&nbsp;
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="pagina =  $event" previousLabel="Precedente" nextLabel="Successivo"></pagination-controls>
+</div>
+
+
+</div>

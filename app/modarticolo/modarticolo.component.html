@@ -1,0 +1,135 @@
+
+<br/>
+<section class="container">
+  <div class="portlet light bordered">
+    <div class="portlet-title">
+      <div class="caption font-red-sunglo">
+        <i class="oi oi-pencil"></i>
+        <span class="caption-subject bold uppercase"> Dati Articolo</span>
+      </div>
+    </div>
+    <!--Inizio del form di inserimento dati-->
+    <div class="alert alert-success" *ngIf='messaggio'>
+      {{messaggio}}
+    </div>
+    <div class="alert alert-danger"*ngIf='errore'>
+      {{errore}}
+
+    </div>
+    <div class="portlet-body form">
+<form (ngSubmit)="artForm.valid && salva()" #artForm="ngForm"> <!--variabile di tempalte-->
+      <div class="form-body">
+
+        <div class="form-group">
+          <label for="codArt">Codice Articolo:</label>
+          <input id="codArt"  type="text" [(ngModel)]="articolo.id" class="form-control" placeholder="Codice Articolo"  name="id" required minlength="1" #codice="ngModel" [disabled]="true"/>
+          <span style="color: red" *ngIf="codice.dirty && codice.invalid">
+            Il codice articolo deve contenere alemeno un carattere
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="descrizione">Nome articolo:</label>
+          <input id="nome" [(ngModel)]="articolo.nome" type="text" class="form-control" placeholder="Nome articolo" name="nome" required minlength="6" maxlength="30" #nomeArt="ngModel"/>
+        <span style="color: red" *ngIf="nomeArt.dirty && nomeArt.invalid">
+          Il nome dell'articolo deve essere compreso tra 6 e 30 caratteri
+        </span>
+        </div>
+
+        <div class="form-group">
+          <label for="descrizione">Descrizione Articolo</label>
+          <input id="descrizione" [(ngModel)]="articolo.descrizione" type="text" class="form-control" placeholder="Descrizione Articolo" name="descrizione" required minlength="15" maxlength="500" #desArt="ngModel"/>
+          <span style="color: red" *ngIf="desArt.dirty && desArt.invalid">
+            La descrizione deve essere compresa fra 15 e 500 caratteri
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="iamge">Inserisci indirizzo immagine</label>
+          <input id="iamge" [(ngModel)]="articolo.image" type="text" class="form-control" placeholder="path immagine" name="imamgine"/>
+        </div>
+
+        <div class="form-row">
+
+          <div class="form-group col-md-4" >
+            <label>Quantità:</label>
+            <input  [(ngModel)]="articolo.quantita" type="text" class="form-control" name="quantita" required maxlength="99" #qntArt="ngModel"/>
+            <span style="color: red" *ngIf="qntArt.dirty && qntArt.invalid">
+              La quantità massima impostabile è di 99 unità.
+            </span>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Prezzo:</label>
+            <input [(ngModel)]="articolo.prezzo" type="text" class="form-control" name="prezzo" required minlength="1" #prezzoArt="ngModel"/>
+            <span style="color: red" *ngIf="prezzoArt.dirty && prezzoArt.invalid">
+              Il prezzo non puo essere vuoto.
+            </span>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Categoria:</label>
+            <input [(ngModel)]="articolo.categoria.categoria" type="text" class="form-control" name="prezzo" required #catArt="ngModel"/>
+            <span style="color: red" *ngIf="catArt.dirty && catArt.invalid">
+              La categoria deve essere inserita
+            </span>
+          </div>
+
+
+          <div class="form-group col-md-4">
+            <div  *ngFor="let det of articolo.dettaglioArticolo">
+            <label>Cpu:</label>
+            <input [(ngModel)]="det.cpu" type="text" class="form-control" name="cpu" required minlength="5" maxlength="20" #cpuArt="ngModel"/>
+              <span style="color: red" *ngIf="cpuArt.dirty && cpuArt.invalid">
+                La cpu deve essere compresa tra 5 e 20 caratteri
+              </span>
+              <label>Ram:</label>
+              <input [(ngModel)]="det.ram" type="text" class="form-control" name="ram" required minlength="5" maxlength="30" #ramArt="ngModel"/>
+              <span style="color: red" *ngIf="ramArt.dirty && ramArt.invalid">
+                La ram deve essere compresa tra 5 e 30 caratteri.
+              </span>
+              <label>Hard Disck:</label>
+              <input [(ngModel)]="det.hd" type="text" class="form-control" name="hd" required minlength="5" maxlength="40" #hdArt="ngModel"/>
+              <span style="color: red" *ngIf="hdArt.dirty && hdArt.invalid">
+                HD deve essere compreso tra 5 e 40 caratteri
+              </span>
+              <label>Sistema Operativo:</label>
+              <input [(ngModel)]="det.so" type="text" class="form-control" name="os" required minlength="5" maxlength="40" #soArt="ngModel"/>
+              <span style="color: red" *ngIf="soArt.dirty && soArt.invalid">
+                Il sistema operativo deve essere compreso tra 5 e 40 caratteri
+              </span>
+              <label>Display:</label>
+              <input [(ngModel)]="det.display" type="text" class="form-control" name="display" required minlength="5" maxlength="40" #dispArt="ngModel"/>
+              <span style="color: red" *ngIf="dispArt.dirty && dispArt.invalid">
+                Il display deve essere compreso tra 5 e 40 caratteri
+              </span>
+              <label>Scheda video:</label>
+              <input [(ngModel)]="det.scheda_video" type="text" class="form-control" name="schedavideo" required minlength="5" maxlength="40" #schedaArt="ngModel"/>
+              <span style="color: red" *ngIf="schedaArt.dirty && schedaArt.invalid">
+                La scheda video deve essere compresa tra 5 e 40 caratteri
+              </span>
+          </div>
+        </div>
+
+        </div>
+
+
+        <hr class="line-form">
+
+        <button type="submit" id="btnAdd" class="btn btn-primary form-buttons" [disabled]="artForm.invalid">
+          <i class="oi oi-script" aria-hidden="true"></i>
+          Salva
+        </button>
+         &nbsp;
+        <button type="submit" id="btnBack" class="btn btn-secondary" (click)="back()">
+          <i class="oi oi-share" aria-hidden="true">
+          </i>
+          Torna alla lista articoli
+        </button>
+
+      </div>
+</form>
+    </div>
+  </div>
+</section>
+<br/>
